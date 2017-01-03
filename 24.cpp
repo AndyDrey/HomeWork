@@ -34,15 +34,14 @@ T* Map(T* p, const int size, T(*pFunc)(const T& a)){
 
 template <typename T>
 T* Filter(T* p, const int size, bool(*pFunc)(const T& a), int &filteredArraySize){
-	int newSize = 0;
+	filteredArraySize = 0;
 	for (int i = 0; i < size; i++)
 	if (pFunc(p[i]))
 	{
-		newSize++;
+		filteredArraySize++;
 	}
-	T* newArr = new T[newSize];
-	filteredArraySize = newSize;
-	for (int i = 0, j = 0; i < size, j < newSize; i++)
+	T* newArr = new T[filteredArraySize];
+	for (int i = 0, j = 0; i < size && j < filteredArraySize; i++)
 	if (pFunc(p[i]))
 	{
 		newArr[j] = p[i];
@@ -66,68 +65,52 @@ int main(){
 	int array[size] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 	double arrayD[size] = { 1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.1 };
 	char arrayC[size] = { "abcdefghi" };
-	//pointer to Multiply func
-	int(*pMultiply)(const int & a);
-	pMultiply = Multiply;
-	double(*pMultiplyD)(const double & a);
-	pMultiplyD = Multiply;
-	char(*pMultiplyC)(const char & a);
-	pMultiplyC = Multiply;
-	//pointer to Check func
-	bool(*pCheck)(const int& a);
-	pCheck = Check;
-	bool(*pCheckD)(const double& a);
-	pCheckD = Check;
-	bool(*pCheckC)(const char& a);
-	pCheckC = Check;
-	//pointer to Add func
-	int(*pAdd)(const int& a, const int& b);
-	pAdd = Add;
-	double(*pAddD)(const double& a, const double& b);
-	pAddD = Add;
-	char(*pAddC)(const char& a, const char& b);
-	pAddC = Add;
 	cout << endl << "==========================MAP FUNCTIONS===========================\n";
-	Map(array, size, pMultiply);
+	Map(array, size, Multiply);
 	for (size_t i = 0; i < size; i++)
 	{
 		cout << array[i] << " ";
 	}
 	cout << endl << "=====================================================\n";
-	Map(arrayD, size, pMultiplyD);
+	Map(arrayD, size, Multiply);
 	for (size_t i = 0; i < size; i++)
 	{
 		cout << arrayD[i] << " ";
 	}
 	cout << endl << "=====================================================\n";
-	Map(arrayC, size, pMultiplyC);
+	Map(arrayC, size, Multiply);
 	for (size_t i = 0; i < size; i++)
 	{
 		cout << arrayC[i] << " ";
 	}
 	cout << endl << "========================CHECK FUNCTIONS=============================\n";
-	int* newMass = Filter(array, size, pCheck, filteredArraySize);
+	int* newMass = Filter(array, size, Check, filteredArraySize);
 	for (size_t i = 0; i < filteredArraySize; i++)
 	{
 		cout << newMass[i] << " ";
 	}
 	cout << endl << "=====================================================\n";
-	double* newMassD = Filter(arrayD, size, pCheckD, filteredArraySize);
+	double* newMassD = Filter(arrayD, size, Check, filteredArraySize);
 	for (size_t i = 0; i < filteredArraySize; i++)
 	{
 		cout << newMassD[i] << " ";
 	}
 	cout << endl << "=====================================================\n";
-	char* newMassC = Filter(arrayC, size, pCheckC, filteredArraySize);
+	char* newMassC = Filter(arrayC, size, Check, filteredArraySize);
 	for (size_t i = 0; i < filteredArraySize; i++)
 	{
 		cout << newMassC[i] << " ";
 	}
 	cout << endl << "=============================REDUCE FUNCTIONS========================\n";
-	cout << Reduce(array, size, pAdd); 
+	cout << Reduce(array, size, Add); 
 	cout << endl << "=====================================================\n";
-	cout << Reduce(arrayD, size, pAddD);
+	cout << Reduce(arrayD, size, Add);
 	cout << endl << "=====================================================\n";
-	cout << Reduce(arrayC, size, pAddC);
+	cout << Reduce(arrayC, size, Add);
+
+	delete[] newMass;
+	delete[] newMassD;
+	delete[] newMassC;
+
 	return 0;
 }
