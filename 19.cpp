@@ -30,15 +30,14 @@ int* Map(int* p, const int size, int(*pFunc)(const int& a)){
 }
 
 int* Filter(int* p, const int size, bool(*pFunc)(const int& a), int &filteredArraySize){
-	int newSize = 0;
+	filteredArraySize = 0;
 	for (int i = 0; i < size; i++)
 	if (pFunc(p[i]))
 	{
-		newSize++;
+		filteredArraySize++;
 	}
-	int* newArr = new int[newSize];
-	filteredArraySize = newSize;
-	for (int i = 0, j = 0; i < size, j < newSize; i++)
+	int* newArr = new int[filteredArraySize];
+	for (int i = 0, j = 0; i < size && j < filteredArraySize; i++)
 	if (pFunc(p[i]))
 	{
 		newArr[j] = p[i];
@@ -59,15 +58,7 @@ int main(){
 	const int size = 10;
 	int filteredArraySize = 0;
 	int array[size] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-	//pointer to Multiply func
-	int (*pMultiply)(const int & a);
-	pMultiply = Multiply;
-	//pointer to Check func
-	bool (*pCheck)(const int& a);
-	pCheck = Check;
-	//pointer to Add func
-	int (*pAdd)(const int& a, const int& b);
-	pAdd = Add;
+
 	// 1st array appear
 	for (size_t i = 0; i < size; i++)
 	{
@@ -75,20 +66,23 @@ int main(){
 	}
 
 	cout << endl << "=====================================================\n";
-	Map(array, size, pMultiply);
+	Map(array, size, Multiply);
 	for (size_t i = 0; i < size; i++)
 	{
 		cout << array[i] << " ";
 	}
 	
 	cout << endl << "=====================================================\n";
-	int* newMass = Filter(array, size, pCheck, filteredArraySize);
+	int* newMass = Filter(array, size, Check, filteredArraySize);
 	for (size_t i = 0; i < filteredArraySize ; i++)
 	{
 		cout << newMass[i] << " ";
 	}
 
 	cout << endl << "=====================================================\n";
-	cout << Reduce(array, size, pAdd);
+	cout << Reduce(array, size, Add);
+	
+	delete[] newMass;
+
 	return 0;
 }
