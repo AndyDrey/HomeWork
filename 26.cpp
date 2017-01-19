@@ -3,35 +3,38 @@
 using namespace std;
 
 class Device{
-	bool workingDevice = false;
+	bool m_workingDevice = false;
 public:
+	Device(){}
+	Device(bool turnOn): m_workingDevice(turnOn){}
 	bool GetWorkingDevice()const{ 
-		  return workingDevice; 
+		  return m_workingDevice; 
 	}
 	void TurnOn(){
-		if (workingDevice == true)
+		if (m_workingDevice == true)
 		{
 			cout << "Device is already ON";
 		}
 		else
 		{
-			workingDevice = true;
+			m_workingDevice = true;
 		}
 	}
 	void TurnOff(){
-		if (workingDevice == false)
+		if (m_workingDevice == false)
 		{
 			cout << "Device is already OFF";
 		}
 		else
 		{
-			workingDevice = false;
+			m_workingDevice = false;
 		}
 	}
 	virtual void GetStatus() const  = 0;
+	virtual ~Device(){};
 };
 
-class Printer : public virtual Device{
+class Printer : virtual public Device{
 public:
 	void Print(){
 		if (GetWorkingDevice())
@@ -55,7 +58,7 @@ public:
 	}
 };
 
-class Scaner : public virtual Device{
+class Scaner : virtual public  Device{
 public:
 	void Scan(){
 		if (GetWorkingDevice())
@@ -81,6 +84,8 @@ public:
 
 class MFU : public Printer, public Scaner{
 public:
+	MFU() : Printer(), Scaner(){}
+	MFU(bool autoOn) : Printer(), Scaner(), Device(autoOn){}
 	void GetStatus() const{
 		if (GetWorkingDevice())
 		{
@@ -98,16 +103,26 @@ int main(){
 	Printer printer;
 	Scaner scaner;
 	MFU mfu;
+	MFU mfuB(true);
+	cout << "======================MFU with constructor=====================" << endl;
+	mfuB.GetStatus();
+	mfuB.Print();
+	mfuB.Scan();
+	cout << "======================Printer(off)=====================" << endl;
 	printer.GetStatus();
 	printer.Print();
+	cout << "======================Scaner(off)=====================" << endl;
 	scaner.GetStatus();
 	scaner.Scan();
+	cout << "======================MFU(off)=====================" << endl;
 	mfu.GetStatus();
 	mfu.Print();
 	mfu.Scan();
+	cout << "======================Turning ON Devices=====================" << endl;
 	printer.TurnOn();
 	scaner.TurnOn();
 	mfu.TurnOn();
+	cout << "======================Devices work=====================" << endl;
 	printer.GetStatus();
 	printer.Print();
 	scaner.GetStatus();
