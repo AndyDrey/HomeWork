@@ -85,7 +85,7 @@ public:
 class MFU : public Printer, public Scaner{
 public:
 	MFU() : Printer(), Scaner(){}
-	MFU(bool autoOn) : Printer(), Scaner(), Device(autoOn){}
+	MFU(bool autoOn) : Device(autoOn), Printer(), Scaner() {}
 	void GetStatus() const{
 		if (GetWorkingDevice())
 		{
