@@ -62,5 +62,10 @@ int main(){
 	{
 		cout << shapes[i]->square() << endl;
 	}
+
+	for (size_t i = 0; i < length; i++)
+	{
+		delete shapes[i];
+	}
 	return 0;
 }
