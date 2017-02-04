@@ -23,25 +23,23 @@ class RomanNumber
 		int number = 0;
 		for (int i = strlen(roman); i >= 0; i--)
 		{
-			for (auto it = rToAr.begin(); it != rToAr.end(); ++it)
+			auto it = rToAr.find(roman[i]);
+			if (it != rToAr.end())
 			{
-				if (roman[i] == it->first){
-					if (it->second >= prev)
-					{
-						number += it->second;
-					}
-					else
-					{
-						number -= it->second;
-					}
-					prev = it->second;
-					break;
+				if (it->second >= prev)
+				{
+					number += it->second;
 				}
+				else
+				{
+					number -= it->second;
+				}
+				prev = it->second;
 			}
 		}
 		return number;
 	}
-	char* ConvertToRoman(int arab) {
+	static char* ConvertToRoman(int arab) {
 		const int arabar[] = { 1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000 };
 		const char* romanar[] = { "I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M" };
 		static char roman[80];
@@ -93,54 +91,38 @@ public:
 
 	RomanNumber& operator+= (const RomanNumber& rhs){
 		this->m_arabic += rhs.m_arabic;
-		this->m_roman = ConvertToRoman(this->m_arabic);
 		return *this;
 	}
 
 	RomanNumber& operator-= (const RomanNumber& rhs){
 		this->m_arabic -= rhs.m_arabic;
-		this->m_roman = ConvertToRoman(this->m_arabic);
 		return *this;
 	}
 
 	RomanNumber& operator*= (const RomanNumber& rhs){
 		this->m_arabic *= rhs.m_arabic;
-		this->m_roman = ConvertToRoman(this->m_arabic);
 		return *this;
 	}
 
 	RomanNumber& operator/= (const RomanNumber& rhs){
 		this->m_arabic /= rhs.m_arabic;
-		this->m_roman = ConvertToRoman(this->m_arabic);
 		return *this;
 	}
 
 	RomanNumber operator+ (const RomanNumber& rhs){
-		RomanNumber tmp;
-		tmp.m_arabic = this->m_arabic + rhs.m_arabic;
-		tmp.m_roman = ConvertToRoman(tmp.m_arabic);
-		return tmp;
+		return RomanNumber(*this) += rhs;
 	}
 
 	RomanNumber operator- (const RomanNumber& rhs){
-		RomanNumber tmp;
-		tmp.m_arabic = this->m_arabic - rhs.m_arabic;
-		tmp.m_roman = ConvertToRoman(tmp.m_arabic);
-		return tmp;
+		return RomanNumber(*this) -= rhs;
 	}
 
 	RomanNumber operator* (const RomanNumber& rhs){
-		RomanNumber tmp;
-		tmp.m_arabic = this->m_arabic * rhs.m_arabic;
-		tmp.m_roman = ConvertToRoman(tmp.m_arabic);
-		return tmp;
+		return RomanNumber(*this) *= rhs;
 	}
 
 	RomanNumber operator/ (const RomanNumber& rhs){
-		RomanNumber tmp;
-		tmp.m_arabic = this->m_arabic / rhs.m_arabic;
-		tmp.m_roman = ConvertToRoman(tmp.m_arabic);
-		return tmp;
+		return RomanNumber(*this) /= rhs;
 	}
 
 	bool operator== (const RomanNumber& rhs){
@@ -180,39 +162,39 @@ public:
 
 	RomanNumber operator++ (){
 		++this->m_arabic;
-		this->m_roman = ConvertToRoman(this->m_arabic);
 		return	*this;
 	}
 
 	RomanNumber operator++ (int){
 		RomanNumber tmp = *this;
 		this->m_arabic++;
-		this->m_roman = ConvertToRoman(this->m_arabic);
 		return tmp;
 	}
 
 	RomanNumber operator-- (){
 		--this->m_arabic;
-		this->m_roman = ConvertToRoman(this->m_arabic);
 		return *this;
 	}
 
 	RomanNumber operator-- (int){
 		RomanNumber tmp = *this;
 		this->m_arabic--;
-		this->m_roman = ConvertToRoman(this->m_arabic);
 		return tmp;
 	}
 
-	friend ostream& operator<< (ostream& os, const RomanNumber& obj){
+	friend ostream& operator<< (ostream& os, RomanNumber& obj){
+		RomanNumber tmp = obj;
+		tmp.m_roman = ConvertToRoman(tmp.m_arabic);
 		os << "Your roman number is: " << obj.m_roman << " Your arabic number is: " << obj.m_arabic;
 		return os;
 	}
 
-	/*friend istream& operator>> (istream& is, const RomanNumber& obj){
-	is >> obj.m_arabic;
-	return is;
-	}*/
+	friend istream& operator>> (istream& is, RomanNumber& obj){
+		int arabic;
+		is >> arabic;
+		obj.m_arabic = arabic;
+		return is;
+	}
 
 	//OPERATORS OVERLOAD TO WORK WITH INT
 	friend int operator+ (const int a, const RomanNumber&rhs){
