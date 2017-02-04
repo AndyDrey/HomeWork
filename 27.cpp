@@ -28,7 +28,7 @@ int main() {
 			}
 			it = orderedMap.find(newWord);
 			if (it == orderedMap.end()){
-				orderedMap.insert(pair<string, int>(newWord, 1));
+				orderedMap.insert({ newWord, 1 });
 			}
 			else
 			{
@@ -44,7 +44,7 @@ int main() {
 	{
 		sortedMap.insert(pair<int, string>((*it).second, (*it).first));
 	}
-	for (auto it = sortedMap.rbegin(); it != sortedMap.rend(), counter < 10; ++it, ++counter)
+	for (auto it = sortedMap.rbegin(); it != sortedMap.rend() && counter < 10; ++it, ++counter)
 	{
 		cout << (*it).first << " : " << (*it).second << endl;
 	}
