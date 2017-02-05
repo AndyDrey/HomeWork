@@ -79,7 +79,7 @@ public:
 	}
 
 	//OPERATORS OVERLOAD
-	RomanNumber operator= (const RomanNumber& rhs){
+	RomanNumber& operator= (const RomanNumber& rhs){
 		this->m_roman = rhs.m_roman;
 		this->m_arabic = rhs.m_arabic;
 		return  *this;
@@ -126,11 +126,7 @@ public:
 	}
 
 	bool operator== (const RomanNumber& rhs){
-		if (this->m_arabic == rhs.m_arabic)
-		{
-			return true;
-		}
-		else return false;
+		return (this->m_arabic == rhs.m_arabic);
 	}
 
 	bool operator!= (const RomanNumber& rhs){
@@ -138,11 +134,7 @@ public:
 	}
 
 	bool operator> (const RomanNumber& rhs){
-		if (this->m_arabic > rhs.m_arabic)
-		{
-			return true;
-		}
-		else return false;
+		return (this->m_arabic > rhs.m_arabic);
 	}
 
 	bool operator>= (const RomanNumber& rhs){
@@ -150,33 +142,30 @@ public:
 	}
 
 	bool operator< (const RomanNumber& rhs){
-		if (this->m_arabic < rhs.m_arabic){
-			return true;
-		}
-		else return false;
+		return (this->m_arabic < rhs.m_arabic);
 	}
 
 	bool operator<= (const RomanNumber& rhs){
 		return *this < rhs || *this == rhs;
 	}
 
-	RomanNumber operator++ (){
+	RomanNumber& operator++ (){
 		++this->m_arabic;
 		return	*this;
 	}
 
-	RomanNumber operator++ (int){
+	RomanNumber& operator++ (int){
 		RomanNumber tmp = *this;
 		this->m_arabic++;
 		return tmp;
 	}
 
-	RomanNumber operator-- (){
+	RomanNumber& operator-- (){
 		--this->m_arabic;
 		return *this;
 	}
 
-	RomanNumber operator-- (int){
+	RomanNumber& operator-- (int){
 		RomanNumber tmp = *this;
 		this->m_arabic--;
 		return tmp;
@@ -270,11 +259,7 @@ public:
 	}
 	// COMPARSION WITH INTEGERS
 	friend bool operator== (const int a, const RomanNumber& rhs){
-		if (a == rhs.m_arabic)
-		{
-			return true;
-		}
-		else return false;
+		return (a == rhs.m_arabic);
 	}
 
 	friend bool operator!= (const int a, const RomanNumber& rhs){
@@ -286,11 +271,7 @@ public:
 	}
 
 	friend bool operator> (const int a, const RomanNumber& rhs){
-		if (a > rhs.m_arabic)
-		{
-			return true;
-		}
-		else return false;
+		return (a > rhs.m_arabic);
 	}
 
 	friend bool operator> (const RomanNumber& lhs, const int a){
@@ -306,10 +287,7 @@ public:
 	}
 
 	friend bool operator< (const int a, const RomanNumber& rhs){
-		if (a < rhs.m_arabic){
-			return true;
-		}
-		else return false;
+		return (a < rhs.m_arabic);
 	}
 
 	friend bool operator< (const RomanNumber& lhs, const int a){
