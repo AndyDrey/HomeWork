@@ -9,6 +9,7 @@ struct Shape
 	Shape(double xVal, double yVal) :m_x(xVal), m_y(yVal){
 	};
 	virtual double square() const = 0;
+	virtual ~Shape(){}
 };
 
 struct Rectangle : public Shape
