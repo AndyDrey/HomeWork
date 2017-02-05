@@ -3,11 +3,12 @@
 #include <map>
 #include <algorithm>
 #include <fstream>
-
+#include <unordered_set>
 using namespace std;
 
 int main() {
 	const string toIgnore = { ".,()" };
+	unordered_set<string> bannedWords = { "i", "or", "and", "that", "the", "of", "not", "a", "if", "as", "to", "is", "us", "this"};
 	int counter = 0;
 	map<string, int> orderedMap{};
 	multimap<int, string> sortedMap{};
@@ -22,17 +23,22 @@ int main() {
 			string newWord;
 			for (size_t i = 0; i < word.length(); i++)
 			{
-				size_t found = toIgnore.find(word[i]);
-				if (found == string::npos)
+				auto found = toIgnore.find(word[i]);
+				if (found == string::npos){
 					newWord += tolower(word[i]);
+				}
 			}
-			it = orderedMap.find(newWord);
-			if (it == orderedMap.end()){
-				orderedMap.insert({ newWord, 1 });
-			}
-			else
+			auto foundBanned = find(bannedWords.begin(), bannedWords.end(), newWord);
+			if (foundBanned == bannedWords.end())
 			{
-				(*it).second++;
+				it = orderedMap.find(newWord);
+				if (it == orderedMap.end()){
+					orderedMap.insert({ newWord, 1 });
+				}
+				else
+				{
+					(*it).second++;
+				}
 			}
 		}
 	}
