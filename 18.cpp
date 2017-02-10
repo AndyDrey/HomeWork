@@ -23,7 +23,7 @@ void FindAverageMark(Student *p, int exampleInt){
 	{
 		averageMark += p[i].gpa;
 	}
-	cout << "Average mark is: " << averageMark / exampleInt << endl;
+	cout << " Average mark is: " << averageMark / exampleInt << endl;
 }
 
 void FindBestStudent(Student *p, int exampleInt)
@@ -38,7 +38,7 @@ void FindBestStudent(Student *p, int exampleInt)
 			bestIndex = i;
 		}
 	}
-	cout << "Best student is: " << p[bestIndex].name << " whith average mark = " << p[bestIndex].gpa << ".He is " << p[bestIndex].age << endl;
+	cout << "Best student is: " << p[bestIndex].name << "whith average mark = " << p[bestIndex].gpa << ".He is " << p[bestIndex].age << endl;
 }
 
 void FindWorstStudent(Student *p, int exampleInt)
@@ -53,7 +53,7 @@ void FindWorstStudent(Student *p, int exampleInt)
 			worstIndex = i;
 		}
 	}
-	cout << "Worst student is: " << p[worstIndex].name << " whith average mark = " << p[worstIndex].gpa << ".He is " << p[worstIndex].age << endl;
+	cout << "Worst student is: " << p[worstIndex].name << "whith average mark = " << p[worstIndex].gpa << ".He is " << p[worstIndex].age << endl;
 }
 
 void FindSupervisiorOlderThen50(Student *p, int exampleInt)
@@ -89,6 +89,6 @@ int main()
 	FindBestStudent(p, exampleInt);
 	FindWorstStudent(p, exampleInt);
 	FindSupervisiorOlderThen50(p, exampleInt);
-	cout << "   ";
+
 	return 0;
 }

@@ -154,7 +154,7 @@ public:
 		return	*this;
 	}
 
-	RomanNumber operator++ (int){
+	RomanNumber& operator++ (int){
 		RomanNumber tmp = *this;
 		this->m_arabic++;
 		return tmp;
@@ -165,7 +165,7 @@ public:
 		return *this;
 	}
 
-	RomanNumber operator-- (int){
+	RomanNumber& operator-- (int){
 		RomanNumber tmp = *this;
 		this->m_arabic--;
 		return tmp;
