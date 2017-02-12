@@ -189,16 +189,15 @@ public:
         }
 
         list_Node<T>* node = head;
-        list_Node<T>* current = node->next;
+        list_Node<T>* current = node;
         tail = head;
         for (; current != sentinel;)
         {
             std::swap(current->next, current->prev);
-            current = current->next;
+            current = current->prev;
         }
 
         head = current->prev;
-        std::swap(head->next, head->prev);
     }
 
     bool empty()

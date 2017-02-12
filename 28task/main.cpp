@@ -52,8 +52,8 @@ int main(){
     my::list<int> dlist2 = dlist;
     cout << "dlist2: " << dlist2 << endl;
 
-    assert(dlist.back() ==dlist2.back());
-    assert(dlist.front()==dlist2.front());
+    assert(dlist.back() == dlist2.back());
+    assert(dlist.front()== dlist2.front());
 
     cout << "--reversed--" << endl;
     for(auto it = dlist.rbegin(); it!=dlist.rend(); ++it)
@@ -103,6 +103,15 @@ int main(){
 
     assert(frwdList.pop_front() == 1);
     assert(frwdList.pop_front() == 2);
+    {
+            my::list<string> list;
+            list.push_back("name2");
+            list.pop_back();
+            list.push_back("name1");
+            list.push_back("name2");
+            list.reverse();
+            cout << "list: " << list << endl;
+        }
     cout << "PASSED" << endl;
     return 0;
 }
