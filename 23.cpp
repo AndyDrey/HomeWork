@@ -167,7 +167,7 @@ public:
 
 	RomanNumber operator-- (int){
 		RomanNumber tmp = *this;
-		(*this)++;
+		(*this)--;
 		return tmp;
 	}
 
