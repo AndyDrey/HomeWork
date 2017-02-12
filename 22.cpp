@@ -26,19 +26,15 @@ public:
 		}
 		m_buffer = nullptr;
 	}
-	void Change(const char value)
+	void ChangeElement(const char value, size_t index)
 	{
 		if (count()>1)
 		{
 			String tmp(m_buffer);
 			std::swap(*this, tmp);
 		}
-		m_buffer[0] = value;
+		m_buffer[index] = value;
 	}
-	char* Show(){
-		return m_buffer;
-	}
-	
 	void swap(String& other)
 	{
 		std::swap(m_buffer, other.m_buffer);
@@ -89,7 +85,7 @@ int main(){
 	assert(str.count() == 2);
 	assert(strcmp(str.GetString(), "Hello") == 0);
 	assert(strcmp(str2.GetString(), "Hello") == 0);
-	str2.Change('x');
+	str2.ChangeElement('x', 0);
 	assert(strcmp(str2.GetString(), "xello") == 0);
 	assert(str.count() == 1);
 	assert(str2.count() == 1);
