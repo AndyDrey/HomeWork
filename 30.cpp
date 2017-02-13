@@ -30,6 +30,16 @@ class RingBuffer
     unsigned long long m_start = 0;
     unsigned long long m_end = 0;
 
+    bool empty_unsafe() const
+    {
+        return (m_start == m_end);
+    }
+
+    bool full_unsafe() const
+    {
+        return (N == (m_start - m_end));
+    }
+
 public:
 
     size_t size() const
@@ -48,46 +58,10 @@ public:
         return empty_unsafe();
     }
 
-    bool empty_unsafe() const
-    {
-        tSize start = m_start % N;
-        tSize end   = m_end % N;
-
-        bool result = false;
-
-        if (start == end)
-        {
-            if (m_start == m_end)
-            {
-                result = true;
-            }
-        }
-
-        return result;
-    }
-
     bool full() const
     {
         lock_guard<mutex> lock(mtx);
         return full_unsafe();
-    }
-
-    bool full_unsafe() const
-    {
-        tSize start = m_start % N;
-        tSize end   = m_end % N;
-
-        bool result = false;
-
-        if (start == end)
-        {
-            if (m_start > m_end)
-            {
-                result = true;
-            }
-        }
-
-        return result;
     }
 
     void push_back(const T& elem)
@@ -149,7 +123,7 @@ int main(int argc, char *argv[])
                 value = ringBuffer.front();
                 ringBuffer.pop_front();
                 cout << "read value: " << value << endl;
-                std::chrono::milliseconds timeout(100);
+                std::chrono::milliseconds timeout(200);
                 std::this_thread::sleep_for(timeout);
             }
                  }};
