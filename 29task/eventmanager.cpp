@@ -28,14 +28,15 @@ void EventManager::addListener(shared_ptr<EventListener>& listener)
         m_listeners.push_back(listener);
         cout << "Added" << endl;
     }
-    else cout << "Can`t add a copy!!!" << endl;
+    else{
+        cout << "You can`t add a copy!!!" << endl;
+    }
 }
 
 void EventManager::removeListener(shared_ptr<EventListener>& listener)
 {
-    m_listeners.erase(remove_if(m_listeners.begin(), m_listeners.end(), [&](weak_ptr<EventListener>l)
-    {
-        return listener == l.lock();
-    }));
+    m_listeners.erase(remove_if(m_listeners.begin(), m_listeners.end(), [&](weak_ptr<EventListener>l){
+                          return listener == l.lock();
+                      }));
     cout << "Removed" << endl;
 }

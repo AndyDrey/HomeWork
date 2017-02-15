@@ -54,8 +54,15 @@ int main(int argc, char *argv[])
     cout << "=================================Publish Event===================================="<<endl;
     EventManager::getInstance().publishEvent(ev);
     cout << "=================================Remove Listener===================================="<<endl;
-    EventManager::getInstance().removeListener(evListener3);
+    EventManager::getInstance().removeListener(evListener1);
     cout << "=================================Publish Event===================================="<<endl;
     EventManager::getInstance().publishEvent(ev);
+    {
+        cout << "=================================With expired listeners===================================="<<endl;
+        shared_ptr<EventListener> scopeListener = make_shared<FileLogger>();
+        EventManager::getInstance().addListener(scopeListener);
+        EventManager::getInstance().publishEvent(Event("Scope Event"));
+    }
+    EventManager::getInstance().publishEvent(Event("Event after scope"));
     return 0;
 }
