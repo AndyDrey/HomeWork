@@ -37,6 +37,6 @@ void EventManager::removeListener(shared_ptr<EventListener>& listener)
 {
     m_listeners.erase(remove_if(m_listeners.begin(), m_listeners.end(), [&](weak_ptr<EventListener>l){
                           return listener == l.lock();
-                      }));
+                      }), m_listeners.end());
     cout << "Removed" << endl;
 }
